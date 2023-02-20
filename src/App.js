@@ -29,7 +29,9 @@ function App() {
     
   ]);
   const [open,setOpen] = useState(false);
+
   const [openSignIn,setOpenSignIn] = useState(false);
+
   const [username,setUsername] = useState('');
   const [password,setPassword] = useState('');
   const [email,setEmail] = useState('');
@@ -113,6 +115,7 @@ function App() {
       
       >
         {/* signUp Modal Code */}
+        
         <Box sx={style}>
           <Typography id="modal-modal-title" 
           variant="h6"
@@ -150,9 +153,11 @@ function App() {
 
       <Modal
         open={openSignIn}
-        onClose={()=>setOpenSignIn(false)}
+        onClose={()=>setOpen(false)}
+      
       >
         {/* signUp Modal Code */}
+        
         <Box sx={style}>
           <Typography id="modal-modal-title" 
           variant="h6"
@@ -162,6 +167,7 @@ function App() {
            >
             <form className='app__signUp'>
             <center>#SlackPosts</center>
+            
             <Input placeholder='email'
             type='text'
             value={email}
@@ -175,29 +181,25 @@ function App() {
             <Button variant='contained' 
             type='submit'
             size='small'
-             sx={{border:'1px light gray'}} onClick={signUp}>Sign Up</Button>
+             sx={{border:'1px light gray'}} onClick={signIn}>Sign In</Button>
             </form>
           </Typography>
           
         </Box>
       </Modal>
-
+      
+      
       <div className='app__header'>
         <h3># SlackPosts</h3>
       </div>
       {user ? (
-        <Button variant='text'
-        sx={{color:'black',size:'medium'}}
-         onClick={() => auth.signOut()}>LogOut</Button>
+        <Button variant='text'sx={{color:'black',size:'medium'}} onClick={() => auth.signOut()}>LogOut</Button>
 
       ) : (
         <div className='app__loginContainer'>
-          <Button variant='text'
-          sx={{color:'black',size:'medium'}}
-          onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          <Button variant='text'
-          sx={{color:'black',size:'medium'}}
-          onClick={() => setOpen(true)}>Sign Up</Button>
+          <Button variant='text'sx={{color:'black',size:'medium'}} onClick={() => setOpenSignIn(true)}>Sign In</Button>
+          
+          <Button variant='text' sx={{color:'black',size:'medium'}} onClick={() => setOpen(true)}>Sign Up</Button>
         </div>
       )}
       {
