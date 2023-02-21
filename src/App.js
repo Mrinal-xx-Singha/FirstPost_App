@@ -70,8 +70,9 @@ function App() {
 
   useEffect(() => {
     // snapshot- powerful listener every time the database changes
+    // indicator (orderBy is used to order the posts)
 
-    db.collection('posts').onSnapshot((snapshot) => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
 
       setPosts(snapshot.docs.map((doc)=> ({ 
         id: doc.id,
@@ -117,14 +118,6 @@ function App() {
 
   return (
     <div className="App">
-
-      {user?.displayName ? (
-        <ImageUpload  username={user.displayName}/>
-      ) : (
-        <h3>Sorry you need to login to upload</h3>
-      )}
-      
-      
 
 
       <Modal
@@ -209,8 +202,7 @@ function App() {
       
       <div className='app__header'>
         <h3># SlackPosts</h3>
-      </div>
-      {user ? (
+        {user ? (
         <Button variant='text'sx={{color:'black',size:'medium'}} onClick={() => auth.signOut()}>LogOut</Button>
 
       ) : (
@@ -220,11 +212,20 @@ function App() {
           <Button variant='text' sx={{color:'black',size:'medium'}} onClick={() => setOpen(true)}>Sign Up</Button>
         </div>
       )}
+      </div>
+      <div className='app__posts'>
       {
         posts.map(({id,post}) => (
-          <Posts key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+          <Posts key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
         ))
       }
+
+      </div>
+      {user?.displayName ? (
+        <ImageUpload  username={user.displayName}/>
+      ) : (
+        <h3>Sorry you need to login to upload</h3>
+      )}
     </div>
   );
 }

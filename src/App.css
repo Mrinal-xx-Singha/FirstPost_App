@@ -13,7 +13,11 @@
   padding: 20px;
   border-bottom: 1px solid lightgray;
   color: #808080;
-
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .app__signUp {
@@ -23,4 +27,10 @@
   flex-direction: column;
   
   text-align: center;
+}
+
+.app__posts{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
