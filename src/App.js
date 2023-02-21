@@ -180,6 +180,7 @@ function App() {
             <center>#SlackPosts</center>
             
             <Input placeholder='email'
+            
             type='text'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
