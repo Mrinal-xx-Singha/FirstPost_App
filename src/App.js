@@ -3,6 +3,7 @@ import './App.css';
 import Posts from './components/Posts'
 import { db,auth } from './firebase';
 import { Modal,Box,Typography, Button,Input } from '@mui/material';
+import ImageUpload from './components/ImageUpload';
 
 
 
@@ -21,13 +22,12 @@ const style = {
 
 function App() {
 
+
   // use State Hook in react
 
-  const [posts, setPosts] = useState([
-
-    // three  objects (props we send) they are username and caption
+   // three  objects (props we send) they are username and caption
     
-  ]);
+  const [posts, setPosts] = useState([]);
   const [open,setOpen] = useState(false);
 
   const [openSignIn,setOpenSignIn] = useState(false);
@@ -71,9 +71,9 @@ function App() {
   useEffect(() => {
     // snapshot- powerful listener every time the database changes
 
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').onSnapshot((snapshot) => {
 
-      setPosts(snapshot.docs.map(doc=> ({ 
+      setPosts(snapshot.docs.map((doc)=> ({ 
         id: doc.id,
         post: doc.data(),
       })));
@@ -84,6 +84,9 @@ function App() {
 
   }, [])
 
+
+  
+
   // Authetication Code using firebase Authentication
   const signUp = (event) => {
     event.preventDefault();
@@ -93,11 +96,16 @@ function App() {
       return authUser.user.updateProfile({
         displayName: username
       })
+      .then((authUser) => {
+        setUser(authUser);
+      })
     })
     .catch((error) => alert(error.message))
 
     setOpen(false);
   }
+
+
   const signIn = (event) => {
     event.preventDefault();
     auth
@@ -109,6 +117,16 @@ function App() {
 
   return (
     <div className="App">
+
+      {user?.displayName ? (
+        <ImageUpload  username={user.displayName}/>
+      ) : (
+        <h3>Sorry you need to login to upload</h3>
+      )}
+      
+      
+
+
       <Modal
         open={open}
         onClose={()=>setOpen(false)}
