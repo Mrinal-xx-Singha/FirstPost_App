@@ -89,17 +89,19 @@ function App() {
   
 
   // Authetication Code using firebase Authentication
+  // user is asked to sign up 
+  
+
+
   const signUp = (event) => {
     event.preventDefault();
     auth
     .createUserWithEmailAndPassword(email,password)
-    .then((authUser) => {
-      return authUser.user.updateProfile({
+    .then(async (authUser) => {
+      const authUser_1 = await authUser.user.updateProfile({
         displayName: username
-      })
-      .then((authUser) => {
-        setUser(authUser);
-      })
+      });
+      setUser(authUser_1);
     })
     .catch((error) => alert(error.message))
 
@@ -136,21 +138,33 @@ function App() {
            >
             <form className='app__signUp'>
             <center>#SlackPosts</center>
+
+            {/* form to get the user name of the user */}
+
             <Input placeholder='username'
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             />
+
+            {/* form to get the email of the user  */}
+
             <Input placeholder='email'
             type='text'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             />
+
+            {/* form to get the password fo the user */}
+
             <Input placeholder='password'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             />
+
+            {/*  */}
+
             <Button variant='contained' 
             type='submit'
             size='small'
@@ -160,7 +174,11 @@ function App() {
           
         </Box>
       </Modal>
+
       {/* ------------------SECOND MODAL---------------------------- */}
+
+      {/* second modal for sign in modal is like a pop up window */}
+
 
       <Modal
         open={openSignIn}
@@ -200,10 +218,14 @@ function App() {
         </Box>
       </Modal>
       
-      
+      {/* header where the buttons are present at the top right  */}
+
+
       <div className='app__header'>
         <h3># SlackPosts</h3>
         {user ? (
+          // Logout button handling the logout authentication of user  
+
         <Button variant='text'sx={{color:'black',size:'medium'}} onClick={() => auth.signOut()}>LogOut</Button>
 
       ) : (
