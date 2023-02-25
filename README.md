@@ -6,6 +6,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Deployed App: [https://63f49dc22949204334bdf32a--wonderful-cobbler-55a6ec.netlify.app/](https://wonderful-cobbler-55a6ec.netlify.app/)
 
+
+#Images
+
+![Screenshot (178)](https://user-images.githubusercontent.com/100140781/221355605-432231f7-d368-454a-a32c-d64bbb42ed7c.png)
+![Screenshot (179)](https://user-images.githubusercontent.com/100140781/221355608-2c740e35-dcd7-4574-8715-a69ae745dad5.png)
+
+
 # Technologies:
 
 * React 
