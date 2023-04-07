@@ -16,7 +16,7 @@ import 'firebase/compat/storage';
   measurementId: "G-2ZEW4TJ76G"
 
   });
-
+  // db firestore 
 const db = firebaseApp.firestore();
 const auth = firebase.auth();
 const storage = firebase.storage();

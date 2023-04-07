@@ -9,6 +9,7 @@ import firebase from 'firebase/compat/app';
 // props and destructure
 
 const Posts = ({ postId, user ,username,caption,imageUrl }) => {
+  
   const [comments, setComments] = useState([]);
   const [comment,setComment] = useState("");
 
@@ -24,7 +25,6 @@ const Posts = ({ postId, user ,username,caption,imageUrl }) => {
       setComments(snapshot.docs.map((doc) => doc.data()));
     });
   }
-  
     return () => {
       unsubscribe();
     };
