@@ -24,3 +24,12 @@ const storage = firebase.storage();
 export {db,auth,storage };
 
 // export default db;
+
+// Allow read/write access on all documents to any user signed in to the application
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /{document=**} {
+//       allow read, write: if request.auth != null;
+//     }
+//   }
+// }
