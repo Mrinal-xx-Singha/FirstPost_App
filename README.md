@@ -4,7 +4,8 @@ a platform to share your day to day photos and memories
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Deployed App: [https://63f49dc22949204334bdf32a--wonderful-cobbler-55a6ec.netlify.app/](https://wonderful-cobbler-55a6ec.netlify.app/)
+## Deployed App: 
+[Live](https://wonderful-cobbler-55a6ec.netlify.app/)
 
 
 # `Images`![Screenshot (183)](https://user-images.githubusercontent.com/100140781/221355728-a4a2ffcd-2272-4264-9780-73b95e801b60.png)
