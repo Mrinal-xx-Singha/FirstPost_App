@@ -2,22 +2,12 @@ import  React, { useState, useEffect } from 'react';
 import './App.css';
 import Posts from './components/Posts'
 import { db,auth } from './firebase';
-import { Modal,Box,Typography, Button,Input } from '@mui/material';
+import  {Button} from '@mui/material';
 import ImageUpload from './components/ImageUpload';
+import AuthModal from './AuthModal';
 
 
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 
 function App() {
@@ -91,132 +81,68 @@ function App() {
   // Authetication Code using firebase Authentication
   // user is asked to sign up 
   
-
-
-  const signUp = (event) => {
+  const handleSubmitSignUp = (event) =>{
     event.preventDefault();
     auth
-    .createUserWithEmailAndPassword(email,password)
-    .then(async (authUser) => {
-      const authUser_1 = await authUser.user.updateProfile({
-        displayName: username
-      });
-      setUser(authUser_1);
-    })
-    .catch((error) => alert(error.message))
+      .createUserWithEmailAndPassword(email,password)
+      .then(async (authUser) =>{
+        await authUser.user.updateProfile({
+          displayName: username,
+        })
+        setUser(authUser.user)
+      })
+      .catch((error) => alert(error.message))
 
-    setOpen(false);
+      setOpen(false);
+
+  }
+  const handleSubmitSignIn = (event) =>{
+    event.preventDefault();
+    auth.signInWithEmailAndPassword(email,password).catch((error) =>(error.message));
+    setOpenSignIn(false)
+  }
+  const handleLogout = () =>{
+    auth.signOut();
   }
 
 
-  const signIn = (event) => {
-    event.preventDefault();
-    auth
-    .signInWithEmailAndPassword(email,password)
-    .catch((error)=>alert(error.message))
 
-    setOpenSignIn(false);
-  }
+
 
   return (
     <div className="App">
-
-
-      <Modal
-        open={open}
-        onClose={()=>setOpen(false)}
+      <AuthModal
+      open={open}
+      onClose={() =>setOpen(false)}
+      title="#SlackPosts - Sign Up"
+      handleSubmit={handleSubmitSignUp}
+      setUsername={setUsername}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      username={username}
+      email={email}
+      password={password}
       
-      >
-        {/* signUp Modal Code */}
-        
-        <Box sx={style}>
-          <Typography id="modal-modal-title" 
-          variant="h6"
-           component="h2"
-           display='center'
-           sx={{color:'lightgrey'}}
-           >
-            <form className='app__signUp'>
-            <center>#SlackPosts</center>
+      />
 
-            {/* form to get the user name of the user */}
 
-            <Input placeholder='username'
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            />
-
-            {/* form to get the email of the user  */}
-
-            <Input placeholder='email'
-            type='text'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            />
-
-            {/* form to get the password fo the user */}
-
-            <Input placeholder='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            />
-
-            {/*  */}
-
-            <Button variant='contained' 
-            type='submit'
-            size='small'
-             sx={{border:'1px light gray'}} onClick={signUp}>Sign Up</Button>
-            </form>
-          </Typography>
-          
-        </Box>
-      </Modal>
 
       {/* ------------------SECOND MODAL---------------------------- */}
 
       {/* second modal for sign in modal is like a pop up window */}
 
 
-      <Modal
-        open={openSignIn}
-        onClose={()=>setOpen(false)}
-      
-      >
-        {/* signUp Modal Code */}
-        
-        <Box sx={style}>
-          <Typography id="modal-modal-title" 
-          variant="h6"
-           component="h2"
-           display='center'
-           sx={{color:'lightgrey'}}
-           >
-            <form className='app__signUp'>
-            <center>#SlackPosts</center>
-            
-            <Input placeholder='email'
-            
-            type='text'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input placeholder='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button variant='contained' 
-            type='submit'
-            size='small'
-             sx={{border:'1px light gray'}} onClick={signIn}>Sign In</Button>
-            </form>
-          </Typography>
-          
-        </Box>
-      </Modal>
+      <AuthModal
+      open={openSignIn}
+      onClose={() =>setOpenSignIn(false)}
+      title="#Slackposts - Sign In"
+      handleSubmit={handleSubmitSignIn}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      email={email}
+      password={password}
+
+      />
       
       {/* header where the buttons are present at the top right  */}
 
@@ -226,7 +152,7 @@ function App() {
         {user ? (
           // Logout button handling the logout authentication of user  
 
-        <Button variant='text'sx={{color:'black',size:'medium'}} onClick={() => auth.signOut()}>LogOut</Button>
+        <Button variant='text'sx={{color:'black',size:'medium'}} onClick={handleLogout}>LogOut</Button>
 
       ) : (
         <div className='app__loginContainer'>
